@@ -12,4 +12,5 @@ conda env create -f environment.yml
 ```bash
 bash scripts/run_demo.sh
 ```
-
+## TODO
+Demo videos and Huggingface Space are coming soon.
