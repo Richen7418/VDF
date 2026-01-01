@@ -7,7 +7,6 @@ import os
 from BiSeNet_model.model import BiSeNet
 from PIL import Image
 import torchvision.transforms as transforms
-import matplotlib.pyplot as plt
 import configargparse
 import os.path as osp
 import tqdm
@@ -18,7 +17,6 @@ import torch.fft as fft
 from torchvision import models, transforms
 import re
 import json
-from pytorch_msssim import ssim as SSIM
 import time
 from datetime import timedelta
 
@@ -326,7 +324,7 @@ def main(
     image_paths = os.listdir(image_path)
     count = 0
     save_path = osp.join(save_path, attack_class)
-    save_path = osp.join(save_path, f'epsilon={str(epsilon)}')
+    save_path = osp.join(save_path, f'epsilon_{str(epsilon)}')
     Path(save_path).mkdir(parents=True, exist_ok=True)
 
     config_dict = {
@@ -491,8 +489,8 @@ def main(
     elapsed_time = timedelta(seconds=total_time)
     formatted_time = str(elapsed_time)
     with open(time_save_path, "w") as f:
-        f.write(f"Total time: {total_time}s\n")
-        f.write(f"Total time: {formatted_time}")
+        f.write(f"总耗时：{total_time}秒\n")
+        f.write(f"总耗时：{formatted_time}")
     return 
 
 def vis_all_size_parsing_maps(adv_image, net, save_path, name):
@@ -541,7 +539,7 @@ if __name__ == "__main__":
     parser = configargparse.ArgumentParser()
     parser.add_argument('--data_path', type=str,default='./data', help='data path')
     parser.add_argument('--attack_class', type=str, default='full_face', help='neck, mouth, face, full_face')
-    parser.add_argument('--epsilon', type=float, default=0.1, help='max perturbation')
+    parser.add_argument('--epsilon', type=float, default=0.05, help='max perturbation')
     parser.add_argument('--max_iter', type=int, default=3000, help='max iteration')
     parser.add_argument('--lr', type=float, default=1e-2, help='learning rate')
     parser.add_argument('--ifftmask_lr', type=float, default=1e-2, help='ifft mask learning rate')
